@@ -184,7 +184,7 @@ function render(isSaving, data) {
                                 if (parentWit) {
                                     result = result + parentWit.Title + "</div><div class='pbiState'>" + parentWit.State;
                                 } else {
-                                    result = result + "Open PBI";
+                                    result = result + "Open Parent";
                                 }
                                 result = result + "</div></div></div>";
                             }
@@ -282,7 +282,7 @@ function ResetRelations() {
 
     var can1 = document.getElementById('canvas2');
     var ctx1 = can1.getContext('2d');
-    can1.style.opacity = 0;
+    can1.className = "relations";
     clearRelationsInternal(ctx1, can1);
 }
 
@@ -290,6 +290,8 @@ function DrawRelations(current) {
     var can1 = document.getElementById('canvas2');
     var ctx1 = can1.getContext('2d');
     var fillStyle = "gray";
+    var showRelations = false;
+    clearRelationsInternal(ctx1, can1);
 
     if (!current.find(".taskTitle").hasClass('noclick')) {
         var witParentId = current.attr("witParentId");
@@ -298,7 +300,7 @@ function DrawRelations(current) {
                 function (x, other) {
                     if (!current.is(other)) {
                         $(other).addClass("sameParent");
-                        can1.style.opacity = 1;
+                        showRelations = true;
                         drawArrow(ctx1, can1, $(current), $(other), fillStyle, false);
                     }
                 }
@@ -309,12 +311,16 @@ function DrawRelations(current) {
                 const currentWit = sprint.GetWorkitemByIdFromAll(witId);
                 const successorIds = currentWit.GetSuccessorIds();
                 successorIds.forEach((id)=>{
-                    can1.style.opacity = 1;
+                    showRelations = true;
                     const other=$("div[witid=" + id + "]");
                     drawArrow(ctx1, can1, $(current), $(other[0]), fillStyle, true);
                 });
             }
         }
+    }
+
+    if (showRelations) {
+        can1.className = "relations showRelations";
     }
 }
 
@@ -342,7 +348,7 @@ function dettachEvents(){
 
 function attachEvents() {
     console.log("Attach events")
-    $(".taskStart").hover( //:not(.PBItaskStart)
+    $(".taskStart:not(.taskSaving)").hover( //:not(.PBItaskStart)
         function (In) {
             if (!$(".activeTask")[0]) {
                 var current = $(In.target).closest(".taskStart");
@@ -366,12 +372,18 @@ function attachEvents() {
     $(".taskStart:not(.PBItaskStart)").click(
         function (event) {
             event.stopPropagation();
-            ResetRelations();
             $(this).toggleClass("activeTask");
             $(".activeTask").not($(this)).removeClass("activeTask");
             if ($(this).hasClass("activeTask")) {
                 DrawRelations($(this));
             }
+        }
+    );
+
+    $(".tooltiptext").click(
+        function (event) {
+            event.stopPropagation();
+            $(this).toggleClass("expandToolTip");
         }
     );
 
@@ -519,9 +531,8 @@ function attachEvents() {
 }
 
 function SetNoClick(obj) {
-    $(".sameParent").removeClass("sameParent");
+    ResetRelations();
     $(obj).find(".taskTitle").addClass('noclick');
-    clearRelations();
     $(obj).addClass("taskChanged");
 }
 

@@ -198,29 +198,29 @@ function updateWorkItemInVSS() {
                         [{
                             "op": "remove",
                             "path": "/fields/Microsoft.VSTS.Scheduling.FinishDate",
-                            "value": ""
+                            "value": null
                         },
                         {
                             "op": "remove",
                             "path": "/fields/Microsoft.VSTS.Scheduling.StartDate",
-                            "value": ""
+                            "value": null
                         }];
                 }else{
                     wijson = 
                     [{
                         "op": "add",
                         "path": "/fields/System.AssignedTo",
-                        "value": workItem.SystemAssignedTo?.uniqueName || workItem.AssignedTo
+                        "value": workItem.SystemAssignedTo
                     },
                     {
                         "op": "add",
                         "path": "/fields/Microsoft.VSTS.Scheduling.FinishDate",
-                        "value": workItem.FinishDate.yyyy_mm_dd()
+                        "value": workItem.FinishDate?.yyyy_mm_dd() || ""
                     },
                     {
                         "op": "add",
                         "path": "/fields/Microsoft.VSTS.Scheduling.StartDate",
-                        "value": workItem.StartDate.yyyy_mm_dd()
+                        "value": workItem.StartDate?.yyyy_mm_dd() || ""
                     }];
                 }
                 workItem.UpdateRawData();
