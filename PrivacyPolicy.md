@@ -19,6 +19,6 @@ We don't collect any information that identifies you as an individual, except th
 ## Disclosure to Third Parties ##
 Except as described in this statement, information you provide will not be transferred to third parties without your consent. Your personal data may be disclosed when such is required according to law, such as when laws against discrimination are applicable or when such is required by the data protection agency.
 
-If you would like to get in touch with us in regard to your personal data, you can open an issue on https://github.com/CHoareCo/VSTS-DropPlan
+If you would like to get in touch with us in regard to your personal data, you can open an issue on https://github.com/PratikVParab/VSTS-DropPlan
 
 Effective as of Jan 1, 2024.

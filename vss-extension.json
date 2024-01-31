@@ -31,12 +31,12 @@
     },
     "links": {
         "support": {
-            "uri": "https://github.com/CHoareCo/VSTS-DropPlan/issues"
+            "uri": "https://github.com/PratikVParab/VSTS-DropPlan/issues"
         }
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/CHoareCo/VSTS-DropPlan"
+        "url": "https://github.com/PratikVParab/VSTS-DropPlan"
     },
     "targets": [
         {
