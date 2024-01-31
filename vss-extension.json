@@ -1,10 +1,10 @@
 {
     "manifestVersion": 1,
     "id": "Drop-plan-extension#{testing-flag}",
-    "version": "2.0.10#{beta-flag}",
+    "version": "2.0.11#{beta-flag}",
     "name": "Sprint Drop Plan#{testing-flag}",
     "description": "Plan and track your sprint with a calendar based view.",
-    "publisher": "yanivsegev",
+    "publisher": "CHoareCo",
     "public": false,
     "icons": {
         "default": "images/logo.png"
@@ -31,12 +31,12 @@
     },
     "links": {
         "support": {
-            "uri": "https://github.com/yanivsegev/VSTS-DropPlan/issues"
+            "uri": "https://github.com/CHoareCo/VSTS-DropPlan/issues"
         }
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/yanivsegev/VSTS-DropPlan"
+        "url": "https://github.com/CHoareCo/VSTS-DropPlan"
     },
     "targets": [
         {

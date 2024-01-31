@@ -158,6 +158,7 @@ function render(isSaving, data) {
 
 
                         result = result + " taskAreaPath" + task.areaPath.id + " ";
+                        result = result + " taskParent" + task.userStory.id + " ";
                         var contentWidth = (colWidth * task.total - 26);
                         result = result + "' style='width:" + contentWidth + "px; ";
 

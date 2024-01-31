@@ -158,6 +158,8 @@ function SprintData(workitems, repository, existingSprint) {
         var names = {};
         var areaPaths = {};
         var areaPathsId = 1;
+        var userStories = {};
+        var userStoriesId = 1;
 
         for (var i = 0; i < this.Wits.length; i++) {
             var workItem = this.Wits[i];
@@ -204,6 +206,11 @@ function SprintData(workitems, repository, existingSprint) {
                 if (!areaPaths[workItem.AreaPath]) {
                     areaPaths[workItem.AreaPath] = { id: areaPathsId };
                     areaPathsId = areaPathsId + 1;
+                }
+                var parentId  = workItem.GetParentId();
+                if (!userStories[parentId]) {
+                    userStories[parentId] = { id: userStoriesId };
+                    userStoriesId = userStoriesId + 1;
                 }
 
                 personRow.hasItems = true;
@@ -348,6 +355,7 @@ function SprintData(workitems, repository, existingSprint) {
                         id: i,
                         endDate: dates[dates.length - 1],
                         areaPath: areaPaths[workItem.AreaPath],
+                        userStory: userStories[parentId],
                         isWitTask: isWitTask
                     };
                 }

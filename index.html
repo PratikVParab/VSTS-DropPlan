@@ -21,6 +21,10 @@
                     <label for="showAreaPath">Highlight same area path</label>
                 </div>
                 <div>
+                    <input id="showParent" type="checkbox" onclick="$('body').toggleClass('showparent');" />
+                    <label for="showParent">Highlight same parent</label>
+                </div>
+                <div>
                     <input id="showPBIs" type="checkbox" onclick="switchViewByTasks(!($('#showPBIs').prop('checked')));" />
                     <label for="showPBIs">View by Parent</label>
                 </div>

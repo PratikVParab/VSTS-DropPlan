@@ -15,7 +15,7 @@ import connect from 'gulp-connect';
 const webserver =  connect.server;
 const livereload = connect.reload;
 
-let publisherId = 'yanivsegev'
+let publisherId = 'CHoareCo'
 try{
     publisherId = fs.readFileSync('publisherid', 'utf8');
     log('Publisher id set to "' + publisherId + '"');
@@ -234,7 +234,7 @@ let watch = function(done){
             {Key: '#{testing-flag}', Value: '-test'},
             {Key: '#{beta-flag}', Value: '.0'},
             {Key: '"public": false', Value: '"public": false'},
-            {Key: '"yanivsegev"', Value: '"' + publisherId + '"'},
+            {Key: '"CHoareCo"', Value: '"' + publisherId + '"'},
             {Key: '"uri": "index.html"', Value: '"uri": "https://localhost:8080"'},
             {Key: '"uri": "dropPlan-settings.html"', Value: '"uri": "https://localhost:8080/dropPlan-settings.html"'},
             {Key: '#{isMinified}', Value: ''}
@@ -268,7 +268,7 @@ let build = gulp.series(
             {Key: '#{testing-flag}', Value: '-test'},
             {Key: '#{beta-flag}', Value: '.'+loadBuildVersion()},
             {Key: '"public": false', Value: '"public": false'},
-            {Key: '"yanivsegev"', Value: '"' + publisherId + '"'},
+            {Key: '"CHoareCo"', Value: '"' + publisherId + '"'},
             {Key: '"uri": "index.html"', Value: '"uri": "https://localhost:8080"'},
             {Key: '"uri": "dropPlan-settings.html"', Value: '"uri": "https://localhost:8080/dropPlan-settings.html"'},
             {Key: '#{isMinified}', Value: ''}
@@ -278,15 +278,15 @@ let build = gulp.series(
             {Key: '#{testing-flag}', Value: '-test-qa'},
             {Key: '#{beta-flag}', Value: '.'+loadBuildVersion()},
             {Key: '"public": false', Value: '"public": false'},
-            {Key: '"yanivsegev"', Value: '"' + publisherId + '"'},
+            {Key: '"CHoareCo"', Value: '"' + publisherId + '"'},
             {Key: '#{isMinified}', Value: '.min'}
         ]),
         copyDynamicFiles(Production.Env, [
             {Key: '#{now}', Value: new Date().toJSON()},
             {Key: '#{testing-flag}', Value: ''},
             {Key: '#{beta-flag}', Value: ''},
-            {Key: '"public": false', Value: '"public": true'},
-            //{Key: '"yanivsegev"', Value: '"yanivsegev"'},
+            {Key: '"public": false', Value: '"public": false'},
+            //{Key: '"CHoareCo"', Value: '"CHoareCo"'},
             //{Key: '"uri": "index.html"', Value: '"uri": "index.html"'},
             {Key: '#{isMinified}', Value: '.min'}
         ])
