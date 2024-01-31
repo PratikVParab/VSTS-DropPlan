@@ -58,6 +58,7 @@ function SprintData(workitems, repository, existingSprint) {
                 var parent = _this.GetWorkitemByIdFromAll(parentId);
                 if (parent) {
                     item.ParentTitle = parent.Title;
+                    item.ParentId = parentId;
                     item.ParentTags = parent.Tags;
                     const activity = item.Activity || "";
 
@@ -82,7 +83,7 @@ function SprintData(workitems, repository, existingSprint) {
         filterArea = this.FilterArea;
 
         return items.filter(function (a) {
-            a.AllSearchable = a.AreaPath + ' ' + a.AssignedTo + ' ' + a.Title + ' ' + a.ParentTitle + ' ' + a.State + ' ' + a.Activity + ' ' + a.Tags + ' ' + a.ParentTags;
+            a.AllSearchable = a.AreaPath + ' ' + a.AssignedTo + ' ' + a.Title + ' ' + a.ParentTitle + ' ' + a.ParentId + ' ' + a.State + ' ' + a.Activity + ' ' + a.Tags + ' ' + a.ParentTags;
 
             return filterTerm == '' ||
                    filterTerm == undefined ||
