@@ -191,38 +191,47 @@ function updateWorkItemInVSS() {
         _witToSave.forEach(function (item, index) {
             var workItem = sprint.GetWorkitemByIdFromAll(item);
             if (workItem){
-                var wijson;
+                var wijson = [];
+                if (workItem.AssignedToComboName != workItem.InitialAssignedToComboName){
+                    wijson.push({
+                        "op": "add",
+                        "path": "/fields/System.AssignedTo",
+                        "value": workItem.AssignedToComboName
+                    });
+                }
 
-                if (!workItem.StartDate) {
-                    wijson =
-                        [{
-                            "op": "remove",
-                            "path": "/fields/Microsoft.VSTS.Scheduling.FinishDate",
-                            "value": null
-                        },
-                        {
+                if (workItem.StartDate?.yyyy_mm_dd() != workItem.InitialStartDate?.yyyy_mm_dd()){
+                    if (!workItem.StartDate) {
+                        wijson.push({
                             "op": "remove",
                             "path": "/fields/Microsoft.VSTS.Scheduling.StartDate",
                             "value": null
-                        }];
-                }else{
-                    wijson = 
-                    [{
-                        "op": "add",
-                        "path": "/fields/System.AssignedTo",
-                        "value": workItem.SystemAssignedTo
-                    },
-                    {
-                        "op": "add",
-                        "path": "/fields/Microsoft.VSTS.Scheduling.FinishDate",
-                        "value": workItem.FinishDate?.yyyy_mm_dd() || ""
-                    },
-                    {
-                        "op": "add",
-                        "path": "/fields/Microsoft.VSTS.Scheduling.StartDate",
-                        "value": workItem.StartDate?.yyyy_mm_dd() || ""
-                    }];
+                        });
+                    }else{
+                        wijson.push({
+                            "op": "add",
+                            "path": "/fields/Microsoft.VSTS.Scheduling.StartDate",
+                            "value": workItem.StartDate?.yyyy_mm_dd() || ""
+                        });
+                    }
                 }
+
+                if (workItem.FinishDate?.yyyy_mm_dd() != workItem.InitialFinishDate?.yyyy_mm_dd()){
+                    if (!workItem.FinishDate) {
+                        wijson.push({
+                            "op": "remove",
+                            "path": "/fields/Microsoft.VSTS.Scheduling.FinishDate",
+                            "value": null
+                        });
+                    }else{
+                        wijson.push({
+                            "op": "add",
+                            "path": "/fields/Microsoft.VSTS.Scheduling.FinishDate",
+                            "value": workItem.FinishDate?.yyyy_mm_dd() || ""
+                        });
+                    }
+                }
+                
                 workItem.UpdateRawData();
                 pushWitInUpdate(workItem.Id);
                 promises.push(repository.UpdateWorkItem(wijson, workItem.Id));
