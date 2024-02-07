@@ -43,6 +43,12 @@ function switchViewByTasks(viewByTasks){
     processWorkItems(sprint.RawWits, false);
 }
 
+function switchViewNonWorkingTeamDays(showNonWorkingTeamDays){
+    repository.SetValueInExtensionDataPerUser("ShowTeamNonWorkingDays", showNonWorkingTeamDays).then(()=>{
+        processWorkItems(sprint.RawWits, false);
+    });
+}
+
 
 var timerid;
 $("#filterBy").on("input", function(e) {
@@ -112,7 +118,7 @@ function processWorkItems(workItems, isSaving) {
         
         container = document.getElementById("grid-container");
 
-        var data = sprint.GetData();
+        const data = sprint.GetData();
         
         dettachEvents();
 
@@ -167,11 +173,8 @@ function pushWitInUpdate(id) {
     }
 }
 
-function removeWitInUpdate(id) {
-    var index = _witInUpdate.indexOf(id);
-    if (index > -1) {
-        _witInUpdate.splice(index, 1);
-    }
+function clearWitInUpdate() {
+    _witInUpdate = [];
 }
 
 function pushWitToSave(witId) {
@@ -245,12 +248,17 @@ function updateWorkItemInVSS() {
 
     _witToSave = [];
     if (promises.length > 0) {
-        Promise.all(promises).then(function (x) {
-            x.forEach(function(item1,index1) {
-                removeWitInUpdate(item1.id);
+        Promise.all(promises)
+            .then(() => { 
+                clearWitInUpdate(); 
+                repository.LoadWorkItems() 
+            })
+            .catch((reason) => {
+                failToCallVss(reason, true) 
+                clearWitInUpdate(); 
+                repository.LoadWorkItems() 
             });
-            repository.LoadWorkItems();
-        }, failToCallVss);
+            
     }
 }
 
@@ -270,18 +278,19 @@ function ResetTasks() {
     }
 }
 
-function failToCallVss(reason) {
-    console.log("Call to server failed! reason: " + JSON.stringify(reason));
-    PauseAutoRefresh();
+function failToCallVss(reason, shouldNotPauseAutoRefresh) {
+    const failure = reason?.serverError?.value?.Message || reason?.message || "";
+    console.error("Call to server failed! " + failure, JSON.stringify(reason));
+    if (shouldNotPauseAutoRefresh != true) PauseAutoRefresh();
     
     if (showFailAlearts){
-        if (reason && reason.message){
-            if (!reason.message.indexOf('Status code 0: error.') > 0){
-                alertUser(reason.message);
+        if (failure != ""){
+            if (!(reason?.message?.indexOf('Status code 0: error.') > 0)){
+                alertUser(failure, reason);
             }
         }
         else{
-            alertUser("Call to server failed! please refresh the page.");
+            alertUser("Call to server failed! please refresh the page.", reason);
         }
     }
 }
