@@ -7,6 +7,7 @@ body{
     --taskOverDue: rgb(255, 121, 121);
     --taskBlocked: orange;
     --taskDone: lightgreen;
+    --taskResolved: lightyellow;
     --relatedTaskOpacity: 1;
     --currentTaskOpacity: 0.5;
 }
@@ -139,6 +140,10 @@ body{
 
 .taskBlocked[style]{
     background: var(--taskBlocked);
+}
+
+.taskResolved[style]{
+    background: var(--taskResolved);
 }
 
 .taskDone[style]{

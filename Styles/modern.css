@@ -2,6 +2,7 @@
     --taskOverDue: rgb(255, 121, 121);
     --taskBlocked: orange;
     --taskDone: #0d0; /*darkgreen;*/
+    --taskResolved: rgb(188, 221, 0); /*darkyellow;*/ 
     --relatedTaskOpacity: 0.5;
     --currentTaskOpacity: 1;
 }
@@ -41,8 +42,11 @@
     background: white;
 }
 
+.taskResolved[style]{
+    background: color-mix(in srgb, var(--taskResolved), var(--background-color) 35%);
+}
 .taskDone[style]{
-    background: color-mix(in srgb, var(--taskDone), var(--background-color) 35%);
+    background: color-mix(in srgb, var(--taskResolved), var(--background-color) 35%);
 }
 
 .taskToday{

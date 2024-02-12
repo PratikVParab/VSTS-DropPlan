@@ -70,6 +70,10 @@ input, select {
     background: rgb(255, 121, 121);
 }
 
+.taskResolved{
+    background:lightyellow;
+}
+
 .taskDone{
     background:lightgreen;
 }

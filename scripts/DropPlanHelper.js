@@ -158,11 +158,18 @@ function render(isSaving, data) {
                         switch (task.workItem.Blocked) {
                             case "Yes": result = result + "taskBlocked "; break;
                         }
-
+                        
+                        const stateCategory = task.workItem.State == "Resolved" ? task.workItem.State : task.workItem.workItemConfig.states.find(o => o.name == task.workItem.State).category; 
+                        
+                        switch (stateCategory) {
+                            case "Resolved":
+                            case "Closed": result = result + "taskResolved "; break;
+                        }
+                        
                         switch (task.workItem.State) {
                             case "Done":
                             case "Closed": result = result + "taskDone "; break;
-                        }
+                        }             
 
                         result = result + " taskStart";
                         if (!task.isWitTask){
