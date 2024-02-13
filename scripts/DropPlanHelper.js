@@ -92,7 +92,7 @@ function render(isSaving, data) {
                             parentId = task.workItem.GetParentId();
                             parentWit = sprint.GetWorkitemByIdFromAll(parentId);
                             result = result + " witParentId=" + parentId + " class='task tooltip ";
-                            if(parentWit){
+                            if(parentWit && sprint.PlanningIssues){
                                 partnerWorktemId = sprint.AllWits.indexOf(parentWit);
 
                                 if(task.workItem.Activity && parentWit.childActivities) {
@@ -131,7 +131,7 @@ function render(isSaving, data) {
                                         result = result + " taskOutOfSequence ";
                                     }
                                 }
-
+                                
                                 const predecessors = sprint.GetWorkitemsByIdsFromAll(parentWit.GetPredecessorIds());
                                 for(const predecessor of predecessors){
                                     const lastChild=predecessor.GetLastChild(useActivityTypeInDependencyTracking ? task.workItem.Activity : undefined);
