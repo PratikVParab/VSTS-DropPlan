@@ -300,8 +300,16 @@ function VSSRepository() {
     }
 
     SetWorkItemTypeCss = function(WorkItem){
-        document.styleSheets[0].insertRule(`.taskDiv > .TaskType${WorkItem.cssName}:before {background:#${WorkItem.color};}`);
-        document.styleSheets[0].insertRule(`.taskDiv > .TaskType${WorkItem.cssName} .taskTypeIcon {background-image:url(${WorkItem.iconUrl};}`);
+        const styleSheets = document.styleSheets;
+
+        for (let i = 0; i < styleSheets.length; i++) {
+            const styleSheet = styleSheets[i];
+            if (styleSheet.href?.includes("dropPlan.css")){
+                styleSheet.insertRule(`.taskDiv > .TaskType${WorkItem.cssName}:before {background:#${WorkItem.color};}`);
+                styleSheet.insertRule(`.taskDiv > .TaskType${WorkItem.cssName} .taskTypeIcon {background-image:url(${WorkItem.iconUrl};}`);
+                return;
+            }
+        }
     }
 
     this.GetCapacity = function (member) {
@@ -332,7 +340,7 @@ function VSSRepository() {
     }
 
     this.IsTeamDayOff = (dateToCheck) => {
-        const date=dateToCheck.yyyymmdd(), day=dateToCheck.getDay()
+        const gmtDateToCheck=dateToCheck.getGMT(), date=gmtDateToCheck.yyyymmdd(), day=gmtDateToCheck.getDay()
         var dayOff = false;
 
         if (isDayInRange(this._data.daysOff.daysOff, date)) dayOff = true;
@@ -346,7 +354,7 @@ function VSSRepository() {
         if (this._data.userSettings.ShowTeamNonWorkingDays){
             return true;
         }
-        const date=dateToCheck.yyyymmdd(), day=dateToCheck.getDay()
+        const gmtDateToCheck=dateToCheck.getGMT(), date=gmtDateToCheck.yyyymmdd(), day=gmtDateToCheck.getDay()
 
         if (isDayInRange(this._data.daysOff.daysOff, date)) return false;
 
