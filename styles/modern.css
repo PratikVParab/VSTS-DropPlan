@@ -27,7 +27,7 @@
 .taskTd
 {
     background: var(--border-subtle-color);
-    border-left: 4px solid var(--background-color);
+    border-left: 4px solid transparent;
 }
 
 .taskDayOff{
@@ -56,6 +56,9 @@
 .taskToday.taskDayOff{
     background: repeating-linear-gradient(15deg, var(--component-label-default-color-hover), var(--border-subtle-color) 10px, var(--border-subtle-color) 10px, var(--component-label-default-color-hover) 20px);
 }
+.previousDayOff {
+    border-left-width: 8px;
+}
 
 .previousDayOff::before {
     border: 2px solid var(--background-color);
@@ -63,9 +66,10 @@
     content: " ";
     position: absolute;
     height: 100%;
-    margin-left: -5px;
+    margin-left: -8px;
     background:repeating-linear-gradient(15deg, var(--component-label-default-color-hover), var(--border-subtle-color) 10px, var(--border-subtle-color) 10px, var(--component-label-default-color-hover) 20px);
     width: 4px;
+    z-index: -1
 }
 
 
