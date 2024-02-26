@@ -3,7 +3,7 @@ var repository = new VSSRepository();
 var sprint, container;
 var _scrollToToday = true;
 var autoRefresh;
-var showFailAlearts = true;
+var showFailAlerts = true;
 var dropPlanLoaded = false;
 
 window.addEventListener("message", receiveMessage, false);
@@ -15,7 +15,7 @@ document.addEventListener("visibilitychange", () => {
             PauseAutoRefresh();
             /*// Reduce the number of refreshes if the tab is in the background to once every 7 minutes (prime number)
             ResumeAutoRefresh(420000);*/
-            showFailAlearts = false;
+            showFailAlerts = false;
         } else {
             console.log("foreground refresh")
             SetAutoRefresh()
@@ -87,7 +87,7 @@ function BuildDropPlan() {
         repository.WorkItemsLoaded = WorkItemsLoaded;
         repository.Init();
     } catch (error) {
-        alertUser(error);
+        alertUser(undefined, error);
     }
 }
 
@@ -103,7 +103,7 @@ function WorkItemsLoaded(workItems){
 
 
 function autoRefreshPlan() {
-    showFailAlearts = false;
+    showFailAlerts = false;
     refreshPlan();
 }
 
@@ -119,16 +119,18 @@ function processWorkItems(workItems, isSaving) {
     try {
         
         sprint = new SprintData(workItems, repository, sprint);
-        
+
         container = document.getElementById("grid-container");
 
         const data = sprint.GetData();
-        
+        console.log("Sprint Data loaded.");
+
         dettachEvents();
-
         render(isSaving, data);
-
         attachEvents();
+
+        console.log("Render done.");
+        
         drawRelations();
         AlignTitlesToView();
 
@@ -146,14 +148,14 @@ function processWorkItems(workItems, isSaving) {
         SetAutoRefresh();
     
     } catch (error) {
-        alertUser(error);
+        alertUser(undefined, error);
     }
 }
 
 function SetAutoRefresh(){
     PauseAutoRefresh();
     ResumeAutoRefresh();
-    showFailAlearts = true;
+    showFailAlerts = true;
 }
 
 function PauseAutoRefresh(){
@@ -284,40 +286,34 @@ function ResetTasks() {
 }
 
 function failToCallVss(reason, shouldNotPauseAutoRefresh) {
-    const failure = reason?.serverError?.value?.Message || reason?.message || "";
     
     if (shouldNotPauseAutoRefresh != true) PauseAutoRefresh();
     
-    if (showFailAlearts){
-        if (failure != ""){
-            if (!(reason?.message?.indexOf('Status code 0:') > 0)){
-                alertUser(failure, reason);
-            }
-            else{
-                console.log("Call to server failed! " + failure, JSON.stringify(reason));
-            }
-
-        }
-        else{
-            alertUser("Call to server failed! please refresh the page.", reason);
-        }
-    }else{
-        if (!(reason?.message?.indexOf('Status code 0:') > 0)
-            && !(reason?.message?.indexOf('Rule Error') > 0)){
-            console.error("Call to server failed! " + failure, JSON.stringify(reason));
-        }
-    }
+    alertUser(failure, reason);
 }
 
 function alertUser(msg, e){
+    
+    if (!msg){
+        msg = e?.serverError?.value?.Message || e?.message || "Unknown error";
+    }
+
     var logMsg = "Alert User: [" + msg + "]";
-    if (!(e?.message?.indexOf('Rule Error') > 0)) // don't log "rule validation" errors
+    
+    if (
+            !(e?.message?.indexOf('Rule Error') > 0) // don't log "rule validation" errors
+            && !(reason?.message?.indexOf('Status code 0:') > 0) //don't log "server unavailable" errors 
+        ) 
     {
         console.error(logMsg, e);
     }else{
         console.log(logMsg, e);
     }
-    alert(msg);
+    if (showFailAlerts){
+        if (!(reason?.message?.indexOf('Status code 0:') > 0)){
+            alert(msg);
+        }
+    }
 }
 
 BuildDropPlan();
