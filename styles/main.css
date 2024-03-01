@@ -481,98 +481,103 @@ canvas {
 
 
 .showareapath .taskAreaPath1 {
-    background:#E0FFFF; 
+    background:#E0FFFF;
 }
 .showareapath .taskAreaPath2 {
-    background:#FAFAD2; 
+    background:#FAFAD2;
 }
 .showareapath .taskAreaPath3 {
-    background:#90EE90; 
+    background:#90EE90;
 }
 .showareapath .taskAreaPath4 {
-    background:#87CEFA; 
+    background:#87CEFA;
 }
 .showareapath .taskAreaPath5 {
-    background:#98FB98; 
+    background:#98FB98;
 }
 .showareapath .taskAreaPath6 {
-    background:#D8BFD8; 
+    background:#D8BFD8;
 }
 .showareapath .taskAreaPath7 {
-    background:#FFC0CB; 
+    background:#FFC0CB;
 }
 
 .showareapath .taskAreaPath8 {
-    background:#7FFFD4; 
+    background:#7FFFD4;
 }
 
 .showareapath .taskAreaPath9 {
-    background:#ADD8E6; 
+    background:#ADD8E6;
 }
 
 .showareapath .taskAreaPath10 {
-    background:#F08080; 
+    background:#F08080;
 }
 
-.showparent .taskParent1 {
-    background:#E0FFFFCC;
+.showParent .task.taskParent1 {
+    background-color:#E0FFFF;
 }
-.showparent .taskParent2 {
-    background:#FAFAD2CC;
+.showParent .task.taskParent2 {
+    background-color:#FAFAD2;
 }
-.showparent .taskParent3 {
-    background:#90EE90CC;
+.showParent .task.taskParent3 {
+    background-color:#90EE90;
 }
-.showparent .taskParent4 {
-    background:#87CEFACC;
+.showParent .task.taskParent4 {
+    background-color:#87CEFA;
 }
-.showparent .taskParent5 {
-    background:#98FB98CC;
+.showParent .task.taskParent5 {
+    background-color:#98FB98;
 }
-.showparent .taskParent6 {
-    background:#D8BFD8CC;
+.showParent .task.taskParent6 {
+    background-color:#D8BFD8;
 }
-.showparent .taskParent7 {
-    background:#FFC0CBCC;
+.showParent .task.taskParent7 {
+    background-color:#FFC0CB;
 }
-.showparent .taskParent8 {
-    background:#7FFFD4CC;
+
+.showParent .task.taskParent8 {
+    background-color:#7FFFD4;
 }
-.showparent .taskParent9 {
-    background:#ADD8E6CC;
+
+.showParent .task.taskParent9 {
+    background-color:#ADD8E6;
 }
-.showparent .taskParent10 {
-    background:#F08080CC;
+
+.showParent .task.taskParent0 {
+    background-color:#F08080;
 }
-.showparent .taskParent11 {
-    background:#F0FFFFCC;
+
+.showParent .task.taskParent00 {
+    --backgroundImage: none
 }
-.showparent .taskParent12 {
-    background:#FAFAE2CC;
+
+.showParent .task.taskParent10 {
+    --backgroundImage: linear-gradient(45deg, white 25%, transparent 25%, transparent 75%, white 75%, white),
+                        linear-gradient(45deg, white 25%, transparent 25%, transparent 75%, white 75%, white);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
 }
-.showparent .taskParent13 {
-    background:#A0EE90CC;
+.showParent .task.taskParent20 {
+    --backgroundImage: linear-gradient(115deg, transparent 75%, white 75%),
+                        linear-gradient(245deg, transparent 75%, white 75%),
+                        linear-gradient(115deg, transparent 75%, white 75%),
+                        linear-gradient(245deg, transparent 75%, white 75%) ;
+    background-size: 15px 30px;
+    background-position: 0 0, 0 0,  7px -15px, 7px -15px;
 }
-.showparent .taskParent14 {
-    background:#97CEFACC;
+.showParent .task.taskParent30 {
+    --backgroundImage: linear-gradient(90deg, transparent 50%, white 50%);
+    background-size: 20px 20px;
 }
-.showparent .taskParent15 {
-    background:#A8FB98CC;
+.showParent .task.taskParent40 {
+    --backgroundImage: linear-gradient(transparent 50%, white 50%);
+    background-size: 20px 20px;
 }
-.showparent .taskParent16 {
-    background:#E8BFD8CC;
-}
-.showparent .taskParent17 {
-    background:#FFD0CBCC;
-}
-.showparent .taskParent18 {
-    background:#8FFFD4CC;
-}
-.showparent .taskParent19 {
-    background:#CDD8E6CC;
-}
-.showparent .taskParent20 {
-    background:#F0A080CC;
+.showParent .task.taskParent50 {
+    --backgroundImage: linear-gradient(90deg, rgba(127,127,127,.5) 50%, transparent 50%),
+                        linear-gradient(rgba(127,127,127,.5) 50%, transparent 50%);
+    background-size:20px 20px;
 }
 
 #tasksTable .sameParent{

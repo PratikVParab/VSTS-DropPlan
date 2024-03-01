@@ -2,6 +2,7 @@ function SprintData(workitems, repository, existingSprint) {
     this.RawWits = workitems;
     this.Wits = [];
     this.AllWits = [];
+    ParentIndex = [];
 
     this.Repository = repository;
     this.StartDate = new Date(repository.IterationStartDate.toISOString()).getGMT();
@@ -76,6 +77,7 @@ function SprintData(workitems, repository, existingSprint) {
                         parent.childActivities[activity]={MinStart: item.StartDate, MaxFinish: item.FinishDate};
                     }
                 }
+                item.ParentIndex=getIndexOrAdd(parentId);
             }
         });
 
@@ -312,9 +314,14 @@ function SprintData(workitems, repository, existingSprint) {
                     for (const element of dates) {
                         const date = element.yyyymmdd();
                         if (!personRow[date]){
-                            console.error("date not found", date, workItem.StartDate, workItem.FinishDate, 
-                            sprint.FirstWorkingDay, sprint.LastWorkingDay);
-                        }else if (personRow[date].length > selectedRow) {
+                            console.error("date not found", date, dates, personRow.Days, workItem.StartDate, workItem.FinishDate, 
+                            sprint.FirstWorkingDay, sprint.LastWorkingDay, 
+                            repository._data.userSettings.ShowTeamNonWorkingDays,
+                            repository._data.teamSettings.workingDays,
+                            repository._data.daysOff.daysOff, element.getDay(), element.getGMT().getDay()
+                            );
+                        }
+                        if (personRow[date].length > selectedRow) {
                             if (personRow[date][selectedRow].Type != 0) {
                                 found = false;
                             }
@@ -373,6 +380,7 @@ function SprintData(workitems, repository, existingSprint) {
                 assignedToId: result.length,
                 hasItems: false,
                 hasEndsOnNonWorkingDay: false,
+                Days: [],
             };
             for (var colIndex = 0; colIndex < this.Dates.length; colIndex++) {
                 var currentDate = this.Dates[colIndex];
@@ -381,6 +389,7 @@ function SprintData(workitems, repository, existingSprint) {
                 newName[currentDate.yyyymmdd()] = [];
                 newName[currentDate.yyyymmdd()].isDayOff = isDayOff;
                 newName[currentDate.yyyymmdd()].isTeamDayOff = isTeamDayOff;
+                newName.Days[currentDate.yyyymmdd()] = {};
 
                 if (currentDate >= _today && !isDayOff) {
                     newName.TotalCapacity = newName.TotalCapacity + newName.Capacity;
@@ -390,5 +399,16 @@ function SprintData(workitems, repository, existingSprint) {
             result.push(newName);
             this.nameById[names[AssignedToComboName].id] = { OriginalAssignedTo: {...OriginalAssignedTo, displayName:OriginalAssignedTo?.displayName?.split("<")[0].trim() || ""} };
         }
+    }
+
+    function getIndexOrAdd(parentId) {
+        let index = ParentIndex.indexOf(parentId);
+    
+        if (index === -1) {
+            ParentIndex.push(parentId);
+            index = ParentIndex.length - 1;
+        }
+    
+        return index;
     }
 }

@@ -17,12 +17,14 @@
                     <!-- <button class='refreshPlanBtn' onclick='refreshPlan();'>Refresh Tasks</button> -->
                 </div>
                 <div>
-                    <input id="showAreaPath" type="checkbox" onclick="$('body').toggleClass('showareapath');" />
-                    <label for="showAreaPath">Highlight same area path</label>
-                </div>
-                <div>
-                    <input id="showParent" type="checkbox" onclick="$('body').toggleClass('showparent');" />
-                    <label for="showParent">Highlight same parent</label>
+                    <!--<input id="showAreaPath" type="checkbox" onclick="$('body').toggleClass('showareapath');" />-->
+                    Highlight:
+                    <select id="highlight" onchange="changeHighlight(this.options[this.selectedIndex].value)">
+                        <option value="">None</option>
+                        <option value="areapath">Area Path</option>
+                        <option value="Status">Status</option>
+                        <option value="Parent">Parent</option>
+                    </select>
                 </div>
                 <div>
                     <input id="showPBIs" type="checkbox" onclick="switchViewByTasks(!($('#showPBIs').prop('checked')));" />
