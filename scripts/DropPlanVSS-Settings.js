@@ -1,23 +1,5 @@
 var repository = new VSSSettingsRepository();
 var showFailAlerts = true;
-window.addEventListener("message", receiveMessage, false);
-
-function receiveMessage(event) {
-    try {
-		console.log("message received")
-        var result = JSON.parse(event.data);
-        if (result.result.fields) {
-            console.log("Refresh.");
-        }
-        if (result.error)
-        {
-            console.log("Error in receiveMessage: " + result.error);
-        }
-
-    } catch (error) {
-
-    }
-}
 
 function reportProgress(msg){
     var messages = document.getElementById("messages");
@@ -57,6 +39,10 @@ function switchUsePBILevelForTasks(enabled){
     repository.usePBILevelForTasks = enabled;
 }
 
+function switchUseNewTimeManagement(enabled){
+    repository.useNewTimeManagement = enabled;
+}
+
 function switchUseActivityTypeInDependencyTracking(enabled){
     repository.useActivityTypeInDependencyTracking = enabled;
 }
@@ -80,6 +66,7 @@ try{
 		}
         $('#showPlanningIssues').prop('checked', repository.highlightPlanningIssues);
         $('#usePBILevelForTasks').prop('checked', repository.usePBILevelForTasks);
+        $('#useNewTimeManagement').prop('checked', repository.useNewTimeManagement);
         $('#useActivityTypeInDependencyTracking').prop('checked', repository.useActivityTypeInDependencyTracking);
         $('#allowSimultaneousSubsequentActivities').prop('checked', repository.allowSimultaneousSubsequentActivities);
 		$("#settingsRoot").css("display","block");
