@@ -131,6 +131,8 @@ function VSSRepository() {
                                     _this._data.iteration = values[3];
                                     _this.IterationStartDate = _this._data.iteration.attributes.startDate;
                                     _this.IterationFinishDate = _this._data.iteration.attributes.finishDate;
+                                    
+                                    //console.log("_this._data.iteration.attributes.startDate",  _this._data.iteration.attributes.startDate);
 
                                     _this.IterationFirstWorkingDate = new Date(_this._data.iteration.attributes.startDate);
                                     while (_this.IterationFirstWorkingDate<_this.IterationFinishDate && _this.IsTeamDayOff(_this.IterationFirstWorkingDate)){
@@ -424,6 +426,7 @@ function VSSRepository() {
                     useNewTimeManagement: true,
                     allowSimultaneousSubsequentActivities: true,
                     useActivityTypeInDependencyTracking: false,
+                    warnAboutParentsWithoutTasks: true,
                     activityOrder: [
                         ["Requirements"],
                         ["Design"],
